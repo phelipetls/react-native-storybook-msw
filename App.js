@@ -5,7 +5,10 @@ import {
   Pressable,
   Text,
   StyleSheet,
+  LogBox,
 } from 'react-native';
+
+LogBox.ignoreLogs(['Require cycle:']);
 
 const App = () => {
   const [showStorybook, setShowStorybook] = useState(false);
