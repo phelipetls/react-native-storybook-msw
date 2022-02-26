@@ -8,11 +8,24 @@ import {
   LogBox,
   DevSettings,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 LogBox.ignoreLogs(['Require cycle:']);
 
 const App = () => {
   const [showStorybook, setShowStorybook] = useState(false);
+
+  useEffect(() => {
+    const getStoredShowStorybook = async () => {
+      setShowStorybook((await AsyncStorage.getItem('@storybook')) === 'true');
+    };
+
+    getStoredShowStorybook();
+  }, []);
+
+  useEffect(() => {
+    AsyncStorage.setItem('@storybook', String(showStorybook));
+  }, [showStorybook]);
 
   useEffect(() => {
     DevSettings.addMenuItem('Toggle Storybook', () => {
