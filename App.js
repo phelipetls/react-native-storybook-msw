@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -6,12 +6,19 @@ import {
   Text,
   StyleSheet,
   LogBox,
+  DevSettings,
 } from 'react-native';
 
 LogBox.ignoreLogs(['Require cycle:']);
 
 const App = () => {
   const [showStorybook, setShowStorybook] = useState(false);
+
+  useEffect(() => {
+    DevSettings.addMenuItem('Toggle Storybook', () => {
+      setShowStorybook(v => !v);
+    });
+  }, []);
 
   if (showStorybook) {
     const StorybookUI = require('./storybook').default;
